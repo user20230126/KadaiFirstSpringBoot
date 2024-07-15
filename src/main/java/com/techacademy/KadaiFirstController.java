@@ -10,12 +10,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class KadaiFirstController {
     
-    @GetMapping("/dayofweek/20240715")
-    public String dispDayOfWeek() {
+    @GetMapping("/dayofweek/{yyyymmdd}")
+    public String dispDayOfWeek(@PathVariable String yyyymmdd) {
+        String ymd = yyyymmdd;
+        String year = ymd.substring(0, 4);
+        String month = ymd.substring(4, 6);
+        String day = ymd.substring(6, 8);
         
-        Calendar cal = Calendar.getInstance();
-        // 日付を指定(月は0から始まる)
-        cal.set(2024, 6, 15);
+        Calendar cal = Calendar.getInstance();{
+            Integer y = Integer.valueOf(year);
+            Integer m = Integer.valueOf(month) -1;
+            Integer d = Integer.valueOf(day);
+        // 日付を指定
+        cal.set(y, m, d);
         // 曜日を取得
         
         int week = cal.get(Calendar.DAY_OF_WEEK);
@@ -46,7 +53,7 @@ public class KadaiFirstController {
         }
         
         return  "実行結果:" + weekString;
-                
+        }
     }
     
     @GetMapping("/plus/{val1}/{val2}")
